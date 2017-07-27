@@ -5,10 +5,10 @@ import sys
 import platform
 import glob
 
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 from torch.utils.ffi import create_extension
 
-#Does gcc compile with this header and library?
+# Does gcc compile with this header and library?
 def compile_test(header, library):
     dummy_path = os.path.join(os.path.dirname(__file__), "dummy")
     command = "bash -c \"g++ -include " + header + " -l" + library + " -x c++ - <<<'int main() {}' -o " + dummy_path + " >/dev/null 2>/dev/null && rm " + dummy_path + " 2>/dev/null\""
@@ -24,6 +24,7 @@ if ex_klm in sys.argv:
 third_party_libs = ["eigen3", "utf8"]
 lib_sources = []
 compile_args = ['-std=c++11', '-fPIC', '-w', '-O3', '-DNDEBUG']
+link_args = ['-static-libstdc++', '-static-libgcc']
 ext_libs = ['stdc++']
 
 if compile_test('zlib.h', 'z'):
@@ -57,7 +58,8 @@ ffi = create_extension(
     include_dirs=third_party_includes,
     with_cuda=False,
     libraries=ext_libs,
-    extra_compile_args=compile_args#, '-DINCLUDE_KENLM']
+    extra_compile_args=compile_args,
+    extra_link_args=link_args
 )
 ffi = ffi.distutils_extension()
 ffi.name = 'pytorch_ctc._ctc_decode'
