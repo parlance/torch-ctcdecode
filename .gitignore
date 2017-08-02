@@ -135,3 +135,7 @@ ENV/
 *.exe
 *.out
 *.app
+
+ctcdecode/ffi.lua
+build/
+build.luarocks/
