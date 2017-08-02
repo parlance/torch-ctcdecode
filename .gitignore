@@ -136,6 +136,6 @@ ENV/
 *.out
 *.app
 
-ctcdecode/ffi.lua
+ctc/ffi.lua
 build/
 build.luarocks/
