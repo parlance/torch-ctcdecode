@@ -1,0 +1,72 @@
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+project(kenlm CXX)
+
+cmake_policy(SET CMP0042 NEW)
+
+set(${PROJECT_NAME}_SOURCES
+  util/double-conversion/bignum-dtoa.cc
+  util/double-conversion/bignum.cc
+  util/double-conversion/cached-powers.cc
+  util/double-conversion/diy-fp.cc
+  util/double-conversion/double-conversion.cc
+  util/double-conversion/fast-dtoa.cc
+  util/double-conversion/fixed-dtoa.cc
+  util/double-conversion/strtod.cc
+  util/bit_packing.cc
+  util/ersatz_progress.cc
+  util/exception.cc
+  util/file.cc
+  util/file_piece.cc
+  util/float_to_string.cc
+  util/integer_to_string.cc
+  util/mmap.cc
+  util/murmur_hash.cc
+  util/parallel_read.cc
+  util/pool.cc
+  util/read_compressed.cc
+  util/scoped.cc
+  util/spaces.cc
+  util/string_piece.cc
+  util/usage.cc
+  lm/bhiksha.cc
+  lm/binary_format.cc
+  lm/config.cc
+  lm/lm_exception.cc
+  lm/model.cc
+  lm/quantize.cc
+  lm/read_arpa.cc
+  lm/search_hashed.cc
+  lm/search_trie.cc
+  lm/sizes.cc
+  lm/trie.cc
+  lm/trie_sort.cc
+  lm/value_build.cc
+  lm/virtual_interface.cc
+  lm/vocab.cc
+)
+
+add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
+
+set(${PROJECT_NAME}_MAX_ORDER 6 CACHE STRING "Max order ngram supported.")
+target_compile_definitions(${PROJECT_NAME} PUBLIC
+  -DKENLM_MAX_ORDER=${${PROJECT_NAME}_MAX_ORDER}
+)
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+  $<INSTALL_INTERFACE:include/kenlm>
+  PRIVATE ${PROJECT_SOURCE_DIR}
+)
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+)
+
+install(DIRECTORY lm util DESTINATION include/${PROJECT_NAME}
+  FILES_MATCHING PATTERN "*.hh"
+  PATTERN "lm/builder" EXCLUDE
+  PATTERN "lm/common" EXCLUDE
+  PATTERN "lm/filter" EXCLUDE
+  PATTERN "lm/interpolate" EXCLUDE
+  PATTERN "lm/wrappers" EXCLUDE
+)
