@@ -1,4 +1,4 @@
-#include "cpu_binding.h"
+#include "thctc.h"
 
 #include <iostream>
 
@@ -37,8 +37,8 @@ float ScoreWord(const Model &model, lm::WordIndex vocab) {
   return full_score_return.prob;
 }
 
-int generate_trie(Labels &labels, const char *kenlm_path, const char *vocab_path,
-           const char *trie_path) {
+int generate_trie(Labels &labels, const char *kenlm_path,
+                  const char *vocab_path, const char *trie_path) {
   lm::ngram::Config config;
   config.load_method = util::POPULATE_OR_READ;
   Model model(kenlm_path, config);
@@ -78,8 +78,8 @@ extern "C" {
 void *get_kenlm_scorer(const wchar_t *label_str, int labels_size,
                        int space_index, int blank_index, const char *lm_path,
                        const char *trie_path) {
-  Labels *labels = new Labels(label_str, labels_size, blank_index,
-  space_index); ctc::KenLMBeamScorer *beam_scorer =
+  Labels *labels = new Labels(label_str, labels_size, blank_index, space_index);
+  ctc::KenLMBeamScorer *beam_scorer =
       new ctc::KenLMBeamScorer(labels, lm_path, trie_path);
   return static_cast<void *>(beam_scorer);
 }
@@ -239,7 +239,6 @@ int generate_lm_trie(const char *label_str, int size, int blank_index,
 }
 
 int kenlm_enabled() { return 1; }
-
 }
 
 } // namespace thctc

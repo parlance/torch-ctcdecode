@@ -17,11 +17,11 @@ ExternalProject_Add(kenlm
                   -DCMAKE_VERBOSE_MAKEFILE=NO
 )
 
-ExternalProject_Get_Property(kenlm SOURCE_DIR BINARY_DIR)
 add_library(third_party::kenlm SHARED IMPORTED)
+add_dependencies(third_party::kenlm kenlm)
+ExternalProject_Get_Property(kenlm SOURCE_DIR BINARY_DIR)
 set_target_properties(third_party::kenlm PROPERTIES
   IMPORTED_LOCATION ${BINARY_DIR}/libkenlm${CMAKE_SHARED_LIBRARY_SUFFIX}
   INTERFACE_INCLUDE_DIRECTORIES ${SOURCE_DIR}
   INTERFACE_COMPILE_DEFINITIONS KENLM_MAX_ORDER=${KENLM_MAX_ORDER}
 )
-add_dependencies(third_party::kenlm kenlm)
