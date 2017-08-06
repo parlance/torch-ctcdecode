@@ -16,9 +16,8 @@ add_library(eigen3 INTERFACE)
 add_dependencies(eigen3 eigen)
 ExternalProject_Get_Property(eigen SOURCE_DIR)
 target_include_directories(eigen3 INTERFACE
-  ${SOURCE_DIR}
-  # $<BUILD_INTERFACE:${SOURCE_DIR}/source>
-  # $<INSTALL_INTERFACE:include/eigen3>
+  $<BUILD_INTERFACE:${SOURCE_DIR}>
+  $<INSTALL_INTERFACE:include/eigen3>
 )
 
 add_library(third_party::eigen3 ALIAS eigen3)

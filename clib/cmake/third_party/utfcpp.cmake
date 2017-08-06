@@ -21,7 +21,7 @@ add_dependencies(utf8 utfcpp)
 ExternalProject_Get_Property(utfcpp SOURCE_DIR)
 target_include_directories(utf8 INTERFACE
   $<BUILD_INTERFACE:${SOURCE_DIR}/source>
-  $<INSTALL_INTERFACE:include/utf8>
+  $<INSTALL_INTERFACE:include>
 )
 
 add_library(third_party::utf8 ALIAS utf8)
