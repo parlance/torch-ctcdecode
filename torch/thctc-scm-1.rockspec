@@ -1,4 +1,4 @@
-package = 'torch_ctc'
+package = 'thctc'
 version = 'scm-1'
 
 source = {
