@@ -13,11 +13,11 @@ limitations under the License.
 #ifndef CTC_CTC_DECODER_H_
 #define CTC_CTC_DECODER_H_
 
-#include "Eigen/Core"
+#include <eigen3/Eigen/Core>
 
 #include "ctc/ctc_status.h"
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 // The CTCDecoder is an abstract interface to be implemented when providing a
@@ -102,6 +102,6 @@ public:
 };
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_DECODER_H_

@@ -46,7 +46,7 @@ limitations under the License.
 #include <string>
 #include <vector>
 
-namespace thctc {
+namespace torch {
 namespace gtl {
 
 // Cmp is an stl binary predicate.  Note that Cmp is the "greater" predicate,
@@ -335,6 +335,6 @@ template <class T, class Cmp> void TopN<T, Cmp>::Reset() {
 }
 
 } // namespace gtl
-} // namespace thctc
+} // namespace torch
 
 #endif // GTL_TOP_N_H_

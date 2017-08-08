@@ -15,6 +15,8 @@ ExternalProject_Add(kenlm
                   -DCMAKE_BUILD_TYPE=Release
                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                   -DCMAKE_VERBOSE_MAKEFILE=NO
+
+  LOG_INSTALL     YES
 )
 
 add_library(third_party::kenlm SHARED IMPORTED)

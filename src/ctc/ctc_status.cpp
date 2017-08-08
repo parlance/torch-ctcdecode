@@ -1,4 +1,4 @@
-#include "ctc_status.h"
+#include "ctc/ctc_status.h"
 
 #include <stdio.h>
 
@@ -6,13 +6,11 @@
 #include <iostream>
 #include <string>
 
-// using namespace std;
-
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 Status::Status(Code code, std::string msg) {
-  assert(code != thctc::ctc::OK);
+  assert(code != torch::ctc::OK);
   state_ = new State;
   state_->code = code;
   state_->msg = msg;
@@ -30,16 +28,16 @@ std::string Status::ToString() const {
     char tmp[30];
     const char *type;
     switch (code()) {
-    case thctc::ctc::Code::CANCELLED:
+    case torch::ctc::Code::CANCELLED:
       type = "Cancelled";
       break;
-    case thctc::ctc::Code::INVALID_ARGUMENT:
+    case torch::ctc::Code::INVALID_ARGUMENT:
       type = "Invalid argument";
       break;
-    case thctc::ctc::Code::FAILED_PRECONDITION:
+    case torch::ctc::Code::FAILED_PRECONDITION:
       type = "Failed precondition";
       break;
-    case thctc::ctc::Code::OUT_OF_RANGE:
+    case torch::ctc::Code::OUT_OF_RANGE:
       type = "Out of range";
       break;
     default:
@@ -67,5 +65,6 @@ Status FailedPrecondition(std::string msg) {
 }
 
 } // namespace errors
+
 } // namespace ctc
-} // namespace thctc
+} // namespace torch

@@ -1,4 +1,4 @@
-package = 'thctc'
+package = 'ctc'
 version = 'scm-1'
 
 source = {
@@ -14,7 +14,6 @@ dependencies = {
   'argcheck',
   'lua >= 5.1',
   'luaffi',
-  'utf8',
   'paths',
   'torch >= 7.0',
 }

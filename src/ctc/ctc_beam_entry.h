@@ -16,7 +16,7 @@ limitations under the License.
 #include <algorithm>
 #include <vector>
 
-#include "Eigen/Core"
+#include <eigen3/Eigen/Core>
 
 #include "ctc/ctc_loss_util.h"
 #include "detail/macros.h"
@@ -27,7 +27,7 @@ limitations under the License.
 //
 // BeamEntry is exposed through template arguments BeamScorer and BeamComparer
 // of CTCBeamSearch (ctc_beam_search.h).
-namespace thctc {
+namespace torch {
 namespace ctc {
 namespace ctc_beam_search {
 
@@ -124,6 +124,6 @@ public:
 
 } // namespace ctc_beam_search
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_BEAM_ENTRY_H_

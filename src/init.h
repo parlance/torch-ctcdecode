@@ -1,4 +1,4 @@
-#include "TH.h"
+#include <TH/TH.h>
 
 typedef enum { CTC, CTC_KENLM } DecodeType;
 
@@ -12,12 +12,16 @@ void set_kenlm_scorer_wc_weight(void *scorer, float weight);
 void set_kenlm_scorer_vwc_weight(void *scorer, float weight);
 
 void *get_base_scorer();
+
 void free_base_scorer(void *scorer);
 
 /* decoders */
 void *get_ctc_beam_decoder(int num_classes, int top_paths, int beam_width,
                            int blank_index, int merge_repeated, void *scorer,
                            DecodeType type);
+
+void *free_ctc_beam_decoder(void *decoder);
+
 
 /* run decoding */
 int ctc_beam_decode(void *decoder, DecodeType type, THFloatTensor *probs,

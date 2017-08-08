@@ -16,7 +16,7 @@ limitations under the License.
 #include <cmath>
 #include <limits>
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 const float kLogZero = -std::numeric_limits<float>::infinity();
@@ -38,6 +38,6 @@ inline float LogSumExp(float log_prob_1, float log_prob_2) {
 }
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_LOSS_UTIL_H_

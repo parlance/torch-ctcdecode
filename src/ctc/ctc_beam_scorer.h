@@ -23,7 +23,7 @@ limitations under the License.
 
 #include "ctc/ctc_beam_entry.h"
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 // Base implementation of a beam scorer used by default by the decoder that can
@@ -66,6 +66,6 @@ public:
 };
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_BEAM_SCORER_H_

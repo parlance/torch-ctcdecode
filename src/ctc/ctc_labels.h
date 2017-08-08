@@ -21,9 +21,9 @@ limitations under the License.
 #include <sstream>
 #include <unordered_map>
 
-#include "utf8.h"
+#include <utf8.h>
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 class Labels {
@@ -75,7 +75,7 @@ private:
     std::string all_symbols_utf8;
     std::getline(is, all_symbols_utf8);
     std::wstring all_symbols;
-    utf8::utf8to16(all_symbols_utf8.begin(), all_symbols_utf8.end(),
+    utf8::utf8to32(all_symbols_utf8.begin(), all_symbols_utf8.end(),
                    std::back_inserter(all_symbols));
     size = all_symbols.size();
     char_list = new wchar_t[size];
@@ -87,6 +87,6 @@ private:
 };
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_LABELS_H_

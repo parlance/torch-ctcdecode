@@ -18,10 +18,11 @@ limitations under the License.
 #ifndef TENSORFLOW_LIB_GTL_STL_UTIL_H_
 #define TENSORFLOW_LIB_GTL_STL_UTIL_H_
 
+#include <stddef.h>
+
 #include <algorithm>
 #include <iterator>
 #include <memory>
-#include <stddef.h>
 #include <string>
 #include <utility>
 #include <vector>

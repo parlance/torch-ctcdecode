@@ -3,7 +3,7 @@
 #ifndef CTC_CTC_STATUS_H_
 #define CTC_CTC_STATUS_H_
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 enum Code {
@@ -19,7 +19,7 @@ public:
   Status() : state_(NULL) {}
   ~Status() { delete state_; }
 
-  Status(thctc::ctc::Code code, std::string msg);
+  Status(torch::ctc::Code code, std::string msg);
 
   /// Copy the specified status.
   Status(const Status &s);
@@ -29,7 +29,7 @@ public:
 
   bool ok() const { return (state_ == NULL); }
 
-  thctc::ctc::Code code() const { return ok() ? thctc::ctc::OK : state_->code; }
+  torch::ctc::Code code() const { return ok() ? torch::ctc::OK : state_->code; }
 
   const std::string &error_message() const {
     return ok() ? empty_string() : state_->msg;
@@ -42,7 +42,7 @@ public:
 private:
   static const std::string &empty_string();
   struct State {
-    thctc::ctc::Code code;
+    torch::ctc::Code code;
     std::string msg;
   };
   // OK status has a `NULL` state_.  Otherwise, `state_` points to
@@ -70,6 +70,6 @@ Status FailedPrecondition(std::string msg);
 } // namespace errors
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_STATUS_H_

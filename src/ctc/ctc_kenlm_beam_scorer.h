@@ -18,20 +18,20 @@ limitations under the License.
 // BeamScorerInterface. The default CTC decoding behavior is implemented
 // through BaseBeamScorer.
 
-#ifndef CTC_CTC_BEAM_SCORER_KLM_H_
-#define CTC_CTC_BEAM_SCORER_KLM_H_
+#ifndef CTC_CTC_KENLM_BEAM_SCORER_
+#define CTC_CTC_KENLM_BEAM_SCORER_
 
 #include <fstream>
 #include <iostream>
 
-#include "lm/model.hh"
-#include "utf8.h"
+#include <kenlm/lm/model.hh>
+#include <utf8.h>
 
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_labels.h"
 #include "ctc/ctc_trie_node.h"
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 namespace ctc_beam_search {
 
@@ -45,7 +45,7 @@ struct KenLMBeamState {
 };
 } // namespace ctc_beam_search
 
-using thctc::ctc::ctc_beam_search::KenLMBeamState;
+using torch::ctc::ctc_beam_search::KenLMBeamState;
 
 class KenLMBeamScorer : public BaseBeamScorer<KenLMBeamState> {
 public:
@@ -192,7 +192,7 @@ private:
 
   bool IsOOV(const std::wstring &word) const {
     std::string encoded_word;
-    utf8::utf16to8(word.begin(), word.end(), std::back_inserter(encoded_word));
+    utf8::utf32to8(word.begin(), word.end(), std::back_inserter(encoded_word));
     auto &vocabulary = model->GetVocabulary();
     return vocabulary.Index(encoded_word) == vocabulary.NotFound();
   }
@@ -202,7 +202,7 @@ private:
     lm::FullScoreReturn full_score_return;
     lm::WordIndex vocab;
     std::string encoded_word;
-    utf8::utf16to8(word.begin(), word.end(), std::back_inserter(encoded_word));
+    utf8::utf32to8(word.begin(), word.end(), std::back_inserter(encoded_word));
     vocab = model->GetVocabulary().Index(encoded_word);
     full_score_return = model->FullScore(model_state, vocab, out);
     return full_score_return.prob;
@@ -219,6 +219,6 @@ private:
 };
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
-#endif // CTC_CTC_BEAM_SCORER_KLM_H_
+#endif // CTC_CTC_KENLM_BEAM_SCORER_

@@ -18,9 +18,9 @@ limitations under the License.
 #include <istream>
 #include <limits>
 
-#include "lm/model.hh"
+#include <kenlm/lm/model.hh>
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 class TrieNode {
@@ -114,6 +114,6 @@ private:
 };
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_TRIE_NODE_H_

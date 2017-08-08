@@ -13,7 +13,7 @@ ExternalProject_Add(utfcpp
 
   INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory
                   <SOURCE_DIR>/source
-                  <INSTALL_DIR>/include/utf8
+                  <INSTALL_DIR>/include
 )
 
 add_library(utf8 INTERFACE)

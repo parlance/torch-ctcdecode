@@ -1,26 +1,26 @@
-#include "thctc.h"
+#include "init.h"
 
 #include <iostream>
 
-#include "TH.h"
-#include "lm/model.hh"
+#include <TH/TH.h>
+#include <kenlm/lm/model.hh>
 
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_beam_scorer.h"
-#include "ctc/ctc_beam_scorer_klm.h"
 #include "ctc/ctc_beam_search.h"
 #include "ctc/ctc_decoder.h"
+#include "ctc/ctc_kenlm_beam_scorer.h"
 #include "ctc/ctc_labels.h"
 #include "ctc/ctc_status.h"
 #include "ctc/ctc_trie_node.h"
 
-namespace thctc {
+namespace torch {
 
-using thctc::ctc::Labels;
-using thctc::ctc::Status;
+using torch::ctc::Labels;
+using torch::ctc::Status;
 
-using thctc::ctc::KenLMBeamScorer;
-using thctc::ctc::ctc_beam_search::KenLMBeamState;
+using torch::ctc::KenLMBeamScorer;
+using torch::ctc::ctc_beam_search::KenLMBeamState;
 typedef lm::ngram::ProbingModel Model;
 
 lm::WordIndex GetWordIndex(const Model &model, const std::string &word) {
@@ -75,6 +75,22 @@ int generate_trie(Labels &labels, const char *kenlm_path,
 
 extern "C" {
 
+// Vanilla beam scorer
+
+void *get_base_scorer() {
+  ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *beam_scorer =
+      new ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer();
+  return static_cast<void *>(beam_scorer);
+}
+
+void free_base_scorer(void *scorer) {
+  ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *beam_scorer =
+      static_cast<ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *>(scorer);
+  delete beam_scorer;
+}
+
+// KenLM beam scorer
+
 void *get_kenlm_scorer(const wchar_t *label_str, int labels_size,
                        int space_index, int blank_index, const char *lm_path,
                        const char *trie_path) {
@@ -102,17 +118,7 @@ void set_kenlm_scorer_vwc_weight(void *scorer, float weight) {
   beam_scorer->SetValidWordCountWeight(weight);
 }
 
-void *get_base_scorer() {
-  ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *beam_scorer =
-      new ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer();
-  return static_cast<void *>(beam_scorer);
-}
-
-void free_base_scorer(void *scorer) {
-  ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *beam_scorer =
-      static_cast<ctc::CTCBeamSearchDecoder<>::DefaultBeamScorer *>(scorer);
-  delete beam_scorer;
-}
+// Get the decoder.
 
 void *get_ctc_beam_decoder(int num_classes, int top_paths, int beam_width,
                            int blank_index, int merge_repeated, void *scorer,
@@ -137,6 +143,12 @@ void *get_ctc_beam_decoder(int num_classes, int top_paths, int beam_width,
   default:
     return nullptr;
   }
+}
+
+void free_ctc_beam_decoder(void *decoder) {
+  ctc::CTCBeamSearchDecoder<> *beam_decoder =
+      static_cast<ctc::CTCBeamSearchDecoder<> *>(decoder);
+  delete beam_decoder;
 }
 
 int ctc_beam_decode(void *void_decoder, DecodeType type,
@@ -241,4 +253,4 @@ int generate_lm_trie(const char *label_str, int size, int blank_index,
 int kenlm_enabled() { return 1; }
 }
 
-} // namespace thctc
+} // namespace torch

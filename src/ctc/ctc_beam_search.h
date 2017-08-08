@@ -16,14 +16,15 @@ limitations under the License.
 #include <cmath>
 #include <memory>
 
-#include "Eigen/Core"
+#include <eigen3/Eigen/Core>
+
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_beam_scorer.h"
 #include "ctc/ctc_decoder.h"
 #include "ctc/ctc_loss_util.h"
 #include "gtl/top_n.h"
 
-namespace thctc {
+namespace torch {
 namespace ctc {
 
 template <typename CTCBeamState = ctc_beam_search::EmptyBeamState,
@@ -385,6 +386,6 @@ Status CTCBeamSearchDecoder<CTCBeamState, CTCBeamComparer>::TopPaths(
 }
 
 } // namespace ctc
-} // namespace thctc
+} // namespace torch
 
 #endif // CTC_CTC_BEAM_SEARCH_H_

@@ -1,5 +1,0 @@
-local ffi = require 'ffi'
-
-ffi.cdef[[@THCTC_H@]]
-
-return ffi.load(package.searchpath('libthctc', package.cpath))

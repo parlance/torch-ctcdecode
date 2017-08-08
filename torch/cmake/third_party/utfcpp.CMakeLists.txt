@@ -13,5 +13,5 @@ install(EXPORT ${PROJECT_NAME}-targets NAMESPACE Upstream::
 )
 install(FILES
   ${PROJECT_SOURCE}/source/utf8.h
-  DESTINATION include/utf8
+  DESTINATION include
 )
