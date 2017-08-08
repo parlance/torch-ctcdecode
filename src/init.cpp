@@ -3,7 +3,8 @@
 #include <iostream>
 
 #include <TH/TH.h>
-#include <kenlm/lm/model.hh>
+
+#include "lm/model.hh"
 
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_beam_scorer.h"
