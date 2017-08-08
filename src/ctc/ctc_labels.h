@@ -21,7 +21,7 @@ limitations under the License.
 #include <sstream>
 #include <unordered_map>
 
-#include <utf8.h>
+#include "utf8.h"
 
 namespace torch {
 namespace ctc {

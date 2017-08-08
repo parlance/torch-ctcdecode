@@ -16,7 +16,7 @@ limitations under the License.
 #include <cmath>
 #include <memory>
 
-#include <eigen3/Eigen/Core>
+#include "Eigen/Core"
 
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_beam_scorer.h"

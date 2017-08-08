@@ -16,7 +16,7 @@ limitations under the License.
 #include <algorithm>
 #include <vector>
 
-#include <eigen3/Eigen/Core>
+#include "Eigen/Core"
 
 #include "ctc/ctc_loss_util.h"
 #include "detail/macros.h"

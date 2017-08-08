@@ -13,7 +13,7 @@ limitations under the License.
 #ifndef CTC_CTC_DECODER_H_
 #define CTC_CTC_DECODER_H_
 
-#include <eigen3/Eigen/Core>
+#include "Eigen/Core"
 
 #include "ctc/ctc_status.h"
 

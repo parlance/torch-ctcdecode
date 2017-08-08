@@ -18,7 +18,7 @@ limitations under the License.
 #include <istream>
 #include <limits>
 
-#include <kenlm/lm/model.hh>
+#include "lm/model.hh"
 
 namespace torch {
 namespace ctc {
