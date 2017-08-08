@@ -19,13 +19,13 @@ limitations under the License.
 // through BaseBeamScorer.
 
 #ifndef CTC_CTC_KENLM_BEAM_SCORER_
-#define CTC_CTC_KENLM_BEAM_SCORER_
+#define CTC_CTC_KENLM_BEAM_SCORER
 
 #include <fstream>
 #include <iostream>
 
-#include <kenlm/lm/model.hh>
-#include <utf8.h>
+#include "lm/model.hh"
+#include "utf8.h"
 
 #include "ctc/ctc_beam_entry.h"
 #include "ctc/ctc_labels.h"
