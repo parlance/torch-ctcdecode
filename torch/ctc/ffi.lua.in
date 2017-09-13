@@ -1,5 +1,0 @@
-local ffi = require 'ffi'
-
-ffi.cdef[[@init_h@]]
-
-return ffi.load(package.searchpath('libctc', package.cpath))
