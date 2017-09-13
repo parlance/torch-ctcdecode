@@ -1,7 +1,6 @@
 #ifndef CTCDECODE_CTC_BEAM_SEARCH_NGRAM_BEAM_SCORER_H_
 #define CTCDECODE_CTC_BEAM_SEARCH_NGRAM_BEAM_SCORER_H_
 
-#include <iostream>
 #include <memory>
 #include <string>
 

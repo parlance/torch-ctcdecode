@@ -16,9 +16,6 @@ function test.BeamSearchDecoder()
     {{0, 0, 0.4, 0.6}, {0, 0, 0.6, 0.4}}
   }:log()
 
-  local sequenceLength = torch.IntTensor(logProbabilities:size(2))
-  sequenceLength:fill(logProbabilities:size(1))
-
   local nBest = 3
 
   local decoder = ctcdecode.BeamSearchDecoder(
@@ -29,6 +26,8 @@ function test.BeamSearchDecoder()
     false
   )
 
+  local sequenceLength = torch.IntTensor(logProbabilities:size(2))
+  sequenceLength:fill(logProbabilities:size(1))
   -- oof this is a long line
   local outputs, alignments, pathLen, scores = decoder:decode(logProbabilities, nBest, sequenceLength)
 
@@ -58,25 +57,19 @@ end
 
 function test.NGramDecoder()
   local logProbabilities = torch.Tensor{
-    {{1, 0, 0, 0}},
     {{0, 0, 0.4, 0.6}},
-    {{1, 0, 0, 0}},
-    {{0, 1, 0, 0}},  -- force a space
-    {{1, 0, 0, 0}},
+    {{0, 1, 0, 0}}, -- force a space
     {{0, 0, 0.4, 0.6}},
-    {{1, 0, 0, 0}},
-    {{1, 0, 0, 0}},
   }:log()
 
-  local sequenceLength = torch.IntTensor(logProbabilities:size(2))
-  sequenceLength:fill(logProbabilities:size(1))
-
-  local nBest = 1
 
   local labelMapFilename = paths.thisfile('data/label_map')
   local ngramModelFilename = paths.thisfile('data/test.arpa')
 
   local scorer = ctcdecode.NGramBeamScorer(labelMapFilename, ngramModelFilename)
+
+  local nBest = 1
+
   local decoder = ctcdecode.NGramDecoder(
     logProbabilities:size(3),
     10 * nBest,
@@ -85,12 +78,10 @@ function test.NGramDecoder()
     false
   )
 
-  local outputs, alignments, pathLen, scores = decoder:decode(logProbabilities, nBest, sequenceLength)
+  local outputs, alignments, pathLen, scores = decoder:decode(logProbabilities, nBest)
   local path = outputs[{{1}, {1}, {1, pathLen[1][1]}}]:squeeze()
   -- 'B' is not in the vocab, so we should prefer 'A A'
   tester:eq(path, torch.IntTensor{2, 1, 2})
-  print(outputs)
-  print(alignments)
 end
 
 
